@@ -1,0 +1,13 @@
+result/**
+!result/.gitkeep
+
+keyring/**
+!keyring/.gitkeep
+
+Text.txt
+
+gen-rsa-key
+pgp-receiver
+pgp-sender
+
+.idea/**

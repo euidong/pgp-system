@@ -1,0 +1,1 @@
+void En_De(int pt[], int c, int key[10]);
