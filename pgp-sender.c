@@ -13,14 +13,10 @@
 //  - Hashing[MD5]
 //  - 송신단의 private key로 암호화[RSA] (HMAC생성)
 //  - Message와 HMAC 합치기
-// 2. Compression
-//  - 해당 message 압축
-// 3. Confidentiality
+// 2. Confidentiality
 //  - 대칭키 생성[random generate]
 //  - 암호화 [SDES]
 //  - 대칭키를 수신단의 public key로 암호화 [RSA]
-// 4. Encoding
-//  - Base64 Encoding 수행
 
 
 

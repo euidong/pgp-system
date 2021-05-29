@@ -7,19 +7,14 @@
 #include "lib/sdes.h"
 
 // 수신단
-// 1. Decoding
-//  - Base64 Decoding 수행
-// 2. Confidentiality
+// 1. Confidentiality
 //  - 대칭키 수신단의 private key로 복호화[RSA]
 //  - 메세지 복호화 [SDES]
-// 3. Decompression
-//  - 해당 message 압축 해제
-// 4. Authentication
+// 2. Authentication
 //  - Message와 HMAC 분리
 //  - Message Hashing[MD5]
 //  - HMAC을 송신단의 public key로 복호화[RSA]
 //  - 서로 비교
-
 
 int main(int n, char *args[n]) {
     if (n != 3) return -1;
@@ -58,48 +53,47 @@ int main(int n, char *args[n]) {
         En_De(bits + (i * 8), 1, sessionKeyInt);
     }
 
-    unsigned long int mac2[16];
-    unsigned char msg2[1024];
-    struct SignedMessage signedMessage2 = { msg2, mac2 };
+    unsigned long int mac[16];
+    unsigned char msg[1024];
+    struct SignedMessage signedMessage = { msg, mac };
 
-    getSignedMessageFromBitArray(signedMessage2, bits, bitSize);
+    getSignedMessageFromBitArray(signedMessage, bits, bitSize);
 
     printf("mac:                    ");
     for (int i = 0; i < 16; ++i) {
-        printf("%ld |", signedMessage2.mac[i]);
+        printf("%ld |", signedMessage.mac[i]);
     }
     printf("\n");
 
-    printf("Message:\n%s\n", signedMessage2.message);
+    printf("Message:\n%s\n", signedMessage.message);
 
     // mac 복호화
     unsigned char decryptedMac[16];
-    decryptMsg(decryptedMac, "keyring/receiver.txt", PUBLIC_KEY, signedMessage2.mac, 16);
+    decryptMsg(decryptedMac, "keyring/receiver.txt", PUBLIC_KEY, signedMessage.mac, 16);
 
     printf("decrpyedMac:            ");
     MDPrint(decryptedMac);
     printf("\n");
 
     // message hash
-    unsigned char digest2[1024];
-    strcpy(digest2, signedMessage2.message);
-    MDString(digest2);
-    printf("digest2:                ");
-    MDPrint(digest2);
+    unsigned char digest[1024];
+    strcpy(digest, signedMessage.message);
+    MDString(digest);
+    printf("digest:                 ");
+    MDPrint(digest);
 
     int flag = 1;
     for (int i = 0; i < 16; i++) {
-        if (digest2[i] != decryptedMac[i]) {
+        if (digest[i] != decryptedMac[i]) {
             flag = 0;
             break;
         }
     }
 
     if (flag) {
-        printf("\ncorrect!!!");
+        printf("\ndecryptedMac == digest.\nSo, Correct.");
         FILE *defp = fopen(args[2], "w");
-        fputs(signedMessage2.message, defp);
-
+        fputs(signedMessage.message, defp);
         fclose(defp);
     } else {
         printf("digest is not equal?!");

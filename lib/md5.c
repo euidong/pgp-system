@@ -490,17 +490,3 @@ unsigned char digest[16];
   printf ("%02x", digest[i]);
 }
 
-
-
-
-//main()
-//{
-//
-//	char a[100]="testing123";
-//
-//	MDString(a);
-//	printf("\n");
-//	MDFile("a.txt");
-//
-//}
-

@@ -97,22 +97,3 @@ void En_De(int pt[], int c, int key[10]) {
     for(i=0;i<8;i++)
         pt[i] = t[ipi[i]-1];
 }
-
-//int main() {
-//    int pt[8]={0},i;
-//    printf("Enter plain text binary bits:");
-//    for(i=0;i<8;i++)
-//        scanf("%d",&pt[i]);
-//    gen_keys(); // Generating Keys key1 & key2
-//    En_De(pt,0);
-//    printf("\nCipher Text :");
-//    for(i=0;i<8;i++)
-//        printf("%d",ct[i]);
-//    //Decrypting - - -
-//    En_De(ct,1);
-//    printf("\nPlain Text (After Decrypting):");
-//    for(i=0;i<8;i++)
-//        printf("%d",ct[i]);
-//    return 0;
-//}
-//
