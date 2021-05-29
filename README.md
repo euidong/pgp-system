@@ -57,8 +57,11 @@
 ### Run
 
 ```bash
+# linux & mac
 echo "Pretty Good Privacy." >> Text.txt
 make run
+# window 
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp gcc:11.1.0 echo "pretty good privacy" >> Text.txt && make run
 ```
 
 ### PGP 소개
